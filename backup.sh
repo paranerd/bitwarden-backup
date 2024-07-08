@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# fail the script as soon as an invalid password has been entered
+# Fail the script as soon as an invalid password has been entered
 set -e
 
 export EXPORT_NAME=bw-export-$(date "+%Y%m%d-%H%M%S")
