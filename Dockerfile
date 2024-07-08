@@ -8,4 +8,6 @@ COPY backup.sh .
 
 RUN npm i -g @bitwarden/cli
 
+ENV EXPORT_PATH=/app/exports
+
 ENTRYPOINT ["bash", "/app/backup.sh"]
