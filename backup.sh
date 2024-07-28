@@ -38,8 +38,14 @@ fi
 # Login if not already authenticated
 if [[ $(bw status | jq -r .status) == "unauthenticated" ]]
 then
-    echo "Logging in..."
-    bw login $BW_EMAIL $BW_PASSWORD --method 0 # --quiet
+    if [ -n ${BW_CLIENTID} ] && [ -n ${BW_CLIENTSECRET} ]
+    then
+      echo "Logging in with API Key..."
+      bw login --apikey
+    else
+      echo "Logging in with username and password..."
+      bw login $BW_EMAIL $BW_PASSWORD --method 0 # --quiet
+    fi
 fi
 if [[ $(bw status | jq -r .status) == "unauthenticated" ]]
 then
