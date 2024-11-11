@@ -20,3 +20,25 @@ sudo docker run -it -e BW_EMAIL="your@mail.com" -v "/host/path/to/exports:/app/e
 ```
 
 You will be prompted for your Master Password, your 2FA code (if applicable) as well as the password you want your export to be encrypted with.
+
+## Login with Client ID and Client Secret
+
+### Plain text
+
+If Client ID and Client Secret are stored in the environment variables `BW_CLIENTID` and `BW_CLIENTSECRET`, respectively, you will only be prompted for the Master Password. No input of a 2FA code is required.
+
+### Encrypted
+
+If Client ID and Client Secret shall not be stored in plain text, use the following commands to encrypt both values with the Master Password, then store them in the `BW_CLIENTID_ENC` and `BW_CLIENTSECRET_ENC` variables, respectively.
+
+**Encrypt Client ID:**
+
+```bash
+echo $BW_CLIENTID | openssl enc -base64 -e -aes-256-cbc -salt -pass pass:$BW_MASTER_PASSWORD -pbkdf2
+```
+
+**Encrypt Client Secret:**
+
+```bash
+echo $BW_CLIENTSECRET | openssl enc -base64 -e -aes-256-cbc -salt -pass pass:$BW_MASTER_PASSWORD -pbkdf2
+```

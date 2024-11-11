@@ -3,6 +3,7 @@
 # Fail the script as soon as an invalid password has been entered
 set -e
 
+export EXPORT_PATH=${EXPORT_PATH:=.}
 export EXPORT_NAME=bw-export-$(date "+%Y%m%d-%H%M%S")
 
 # Prompt for Bitwarden password
@@ -38,8 +39,15 @@ fi
 # Login if not already authenticated
 if [[ $(bw status | jq -r .status) == "unauthenticated" ]]
 then
-    if [ -n ${BW_CLIENTID} ] && [ -n ${BW_CLIENTSECRET} ]
+    if [ -n "${BW_CLIENTID}" ] && [ -n "${BW_CLIENTSECRET}" ]
     then
+      echo "Logging in with API Key..."
+      bw login --apikey
+    elif [ -n "${BW_CLIENTID_ENC}" ] && [ -n "${BW_CLIENTSECRET_ENC}" ]
+    then
+      export BW_CLIENTID=$(echo $BW_CLIENTID_ENC | openssl enc -base64 -d -aes-256-cbc -salt -pass pass:$BW_PASSWORD -pbkdf2)
+      export BW_CLIENTSECRET=$(echo $BW_CLIENTSECRET_ENC | openssl enc -base64 -d -aes-256-cbc -salt -pass pass:$BW_PASSWORD -pbkdf2)
+
       echo "Logging in with API Key..."
       bw login --apikey
     else
