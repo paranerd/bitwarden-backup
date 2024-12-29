@@ -42,3 +42,21 @@ echo $BW_CLIENTID | openssl enc -base64 -e -aes-256-cbc -salt -pass pass:$BW_MAS
 ```bash
 echo $BW_CLIENTSECRET | openssl enc -base64 -e -aes-256-cbc -salt -pass pass:$BW_MASTER_PASSWORD -pbkdf2
 ```
+
+## Recover
+
+**Important:** This tool at its current state is meant for backup ONLY. Meaning it doesn't include an easy way for re-import.
+
+To recover / take a look at the export use the following commands:
+
+```bash
+gpg --output vault.tar.gz --decrypt bw-export-*.tar.gz.gpg
+```
+
+```bash
+tar -xf vault.tar.gz
+```
+
+```bash
+chmod -R 755 bw-export-*
+```
