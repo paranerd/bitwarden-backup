@@ -2,7 +2,7 @@ FROM node:slim
 
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install jq gpg -y
+RUN apt-get update -y && apt-get install jq openssl gpg -y
 
 COPY backup.sh .
 
