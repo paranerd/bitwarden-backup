@@ -4,7 +4,7 @@
 set -e
 
 export EXPORT_PATH=${EXPORT_PATH:=.}
-export EXPORT_NAME=bitwarden_encrypted_backup_$(date "+%Y%m%d%H%M%S")
+export EXPORT_NAME=bitwarden_encrypted_export_$(date "+%Y%m%d%H%M%S")
 
 # Prompt for Bitwarden password
 echo -n "Enter your Bitwarden password: "
